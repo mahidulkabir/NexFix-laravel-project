@@ -28,21 +28,25 @@ Route::middleware('auth')->group(function () {
 });
 
 // Public routes
-Route::get('/service', [ServiceController::class, 'index'])->name('home');
-Route::get('/service/{id}', [ServiceController::class, 'show'])->name('service.show');
+Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+Route::get('/service/{id}', [ServiceController::class, 'show'])->name('services.show');
 Route::get('/categories', [ServiceCategoryController::class, 'index'])->name('categories.index');
+
 
 // Protected routes
 Route::middleware(['auth'])->group(function () {
-
+    
     // Customer routes
     Route::middleware('role:customer')->group(function () {
         Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
         Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
         Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
         Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+        Route::get('/bookings/create/{serviceId}', [BookingController::class, 'create'])->name('bookings.create');
+        Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
+        Route::post('/reviews/store', [ReviewController::class, 'store'])->name('reviews.store');
     });
-
+    
     // Vendor routes
     Route::middleware('role:vendor')->group(function () {
         Route::get('/vendor/dashboard', [DashboardController::class, 'vendor'])->name('vendor.dashboard');
@@ -58,10 +62,6 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-// temp
-Route::view('/services', 'services.index')->name('services.index');
-Route::view('/bookings', 'bookings.index')->name('bookings.index');
-Route::view('/reviews', 'reviews.index')->name('reviews.index');
 
 
 require __DIR__.'/auth.php';

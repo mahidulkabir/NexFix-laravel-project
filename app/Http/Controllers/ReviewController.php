@@ -26,11 +26,13 @@ class ReviewController extends Controller
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string',
         ]);
+        
+        $booking = Booking::findOrFail($request->booking_id);
 
         Review::create([
-            'booking_id' => $request->booking_id,
+            'booking_id' => $booking->id,
             'customer_id' => Auth::id(),
-            'vendor_id' => $request->vendor_id,
+            'vendor_id' => $booking->vendorService->vendor_id,
             'rating' => $request->rating,
             'comment' => $request->comment,
         ]);
