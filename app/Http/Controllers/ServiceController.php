@@ -8,10 +8,19 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    public function index()
-    {
-        $services = Service::with('category')->where('active', true)->latest()->get();
-        return view('services.index', compact('services'));
+    public function index(Request $request)
+    {   
+        $query =Service::with('category')->where('active',true);
+        if($request->has('category')){
+            $query->where('category_id',$request->input('category'));
+        }
+        if ($request->has('search')){
+            $query->where('name','like',"%{$request->search}%");
+        }
+
+        $services = $query->paginate(9);
+        $categories = ServiceCategory::all();
+        return view('services.index', compact('services','categories'));
     }
 
     public function show($id)
