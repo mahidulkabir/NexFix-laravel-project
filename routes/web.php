@@ -10,6 +10,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminVendorController;
 
 // ============================
 // Public Routes
@@ -85,6 +86,10 @@ Route::middleware(['auth'])->group(function () {
         // Manage Categories and Services
         Route::resource('/categories', ServiceCategoryController::class);
         Route::resource('/services', ServiceController::class);
+        // routes/web.php (inside admin middleware group)
+        Route::get('/vendors', [AdminVendorController::class, 'index'])->name('admin.vendors.index');
+        Route::post('/vendors/{id}/approve', [AdminVendorController::class, 'approve'])->name('admin.vendors.approve');
+        Route::post('/vendors/{id}/reject', [AdminVendorController::class, 'reject'])->name('admin.vendors.reject');
     });
 });
 

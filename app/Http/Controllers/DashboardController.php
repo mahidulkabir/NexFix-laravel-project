@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Payment;
+use App\Models\Service;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -21,7 +23,10 @@ class DashboardController extends Controller
         $stats = [
             'users' => User::count(),
             'bookings' => Booking::count(),
-            'totalPayments' => Payment::sum('amount'),
+            'totalPayments' => Payment::sum('amount'),  
+            'vendors' => Vendor::count(),
+            'services' => Service::count(),
+           
         ];
 
         return view('admin.dashboard', compact('stats'));
