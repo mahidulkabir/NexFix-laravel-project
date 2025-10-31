@@ -19,16 +19,14 @@ class DashboardController extends Controller
     }
 
     public function admin()
-    {
-        $stats = [
-            'users' => User::count(),
-            'bookings' => Booking::count(),
-            'totalPayments' => Payment::sum('amount'),  
-            'vendors' => Vendor::count(),
-            'services' => Service::count(),
-           
-        ];
+{
+    $totalUsers = User::count();
+    $activeVendors =Vendor::where('verified', true)->count();
+    $totalBookings = Booking::count();
 
-        return view('admin.dashboard', compact('stats'));
-    }
+    $recentBookings = Booking::with(['customer', 'vendorService.vendor', 'vendorService.service'])
+        ->latest()->take(5)->get();
+
+    return view('admin.dashboard', compact('totalUsers', 'activeVendors', 'totalBookings', 'recentBookings'));
+}
 }
