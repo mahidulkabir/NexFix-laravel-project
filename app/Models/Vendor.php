@@ -10,6 +10,13 @@ class Vendor extends Model
 {
     return $this->belongsTo(User::class);
 }
+// for vendor service management by admin 
+public function services()
+{
+    return $this->belongsToMany(Service::class, 'vendor_services')
+                ->withPivot('price', 'active')
+                ->withTimestamps();
+}
 
 public function vendorServices()
 {

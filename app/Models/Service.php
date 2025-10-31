@@ -15,4 +15,13 @@ class Service extends Model
     {
         return $this->hasMany(VendorService::class);
     }
+
+    // for vendor service management by admin 
+    public function vendors()
+{
+    return $this->belongsToMany(Vendor::class, 'vendor_services')
+                ->withPivot('price', 'active')
+                ->withTimestamps();
+}
+
 }

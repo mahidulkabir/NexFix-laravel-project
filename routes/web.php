@@ -72,9 +72,17 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/services', [VendorServiceController::class, 'index'])->name('vendor.services.index');
         Route::get('/services/create', [VendorServiceController::class, 'create'])->name('vendor.services.create');
         Route::post('/services/store', [VendorServiceController::class, 'store'])->name('vendor.services.store');
+        Route::post('/services/toggle/{id}', [VendorServiceController::class, 'toggle'])->name('vendor.services.toggle');
+        Route::delete('/services/{id}', [VendorServiceController::class, 'destroy'])->name('vendor.services.destroy');
 
         // Vendor Bookings
         Route::get('/bookings', [BookingController::class, 'vendorBookings'])->name('vendor.bookings.index');
+
+        // Vendor Services
+
+
+
+
     });
 
     // ============================

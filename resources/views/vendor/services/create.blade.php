@@ -1,34 +1,33 @@
-@extends('layouts.app')
+@extends('layouts.vendor')
 
 @section('content')
 <div class="container mt-4">
-  <h2>Add New Service</h2>
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5><i class="fa fa-plus"></i> Add a Service</h5>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('vendor.services.store') }}" method="POST">
+                @csrf
+                <div class="mb-3">
+                    <label class="form-label">Service <span class="text-danger">*</span></label>
+                    <select name="service_id" class="form-select" required>
+                        <option value="">-- Select --</option>
+                        @foreach($services as $service)
+                            <option value="{{ $service->id }}">{{ $service->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-  <form method="POST" action="{{ route('vendor.services.store') }}">
-    @csrf
-    <div class="mb-3">
-      <label for="service_id" class="form-label">Select Service</label>
-      <select name="service_id" id="service_id" class="form-select" required>
-        @foreach($services as $service)
-          <option value="{{ $service->id }}">{{ $service->name }}</option>
-        @endforeach
-      </select>
+                <div class="mb-3">
+                    <label class="form-label">Your Price (৳)</label>
+                    <input type="number" name="price" class="form-control" min="0" step="0.01" required>
+                </div>
+
+                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                <a href="{{ route('vendor.services.index') }}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
+            </form>
+        </div>
     </div>
-
-    <div class="mb-3">
-      <label for="price" class="form-label">Custom Price</label>
-      <input type="number" name="price" id="price" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="status" class="form-label">Status</label>
-      <select name="status" id="status" class="form-select">
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-      </select>
-    </div>
-
-    <button type="submit" class="btn btn-success">Save Service</button>
-  </form>
 </div>
 @endsection
