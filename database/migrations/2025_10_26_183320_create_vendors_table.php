@@ -19,6 +19,7 @@ return new class extends Migration
     $table->float('rating')->default(0);
     $table->boolean('verified')->default(false);
     $table->json('documents')->nullable();
+    $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending')->after('documents');
     $table->timestamps();
 });
     }
