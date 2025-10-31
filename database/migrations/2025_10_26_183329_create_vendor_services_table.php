@@ -15,7 +15,7 @@ return new class extends Migration
     $table->id();
     $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade');
     $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
-    $table->decimal('price', 10, 2);
+    $table->decimal('base_price', 10, 2);
     $table->enum('status', ['active', 'inactive'])->default('active');
     $table->timestamps();
 });

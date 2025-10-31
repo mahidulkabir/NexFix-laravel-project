@@ -34,14 +34,15 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Dashboard (generic for all roles)
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['verified'])->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->middleware(['verified'])->name('dashboard');
 
     // ============================
     // CUSTOMER ROUTES
     // ============================
     Route::middleware('role:customer')->prefix('customer')->group(function () {
+        Route::get('/customer/dashboard', [DashboardController::class, 'customer'])->name('customer.dashboard');
 
         // Bookings
         Route::get('/bookings', [BookingController::class, 'customerBookings'])->name('customer.bookings.index');
@@ -62,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:vendor')->prefix('vendor')->group(function () {
 
         // Dashboard
-        Route::get('/dashboard', [DashboardController::class, 'vendor'])->name('vendor.dashboard');
+        Route::get('/vendor/dashboard', [DashboardController::class, 'vendor'])->name('vendor.dashboard');
 
         // Profile
         Route::get('/profile', [VendorController::class, 'index'])->name('vendor.profile');
@@ -89,7 +90,7 @@ Route::middleware(['auth'])->group(function () {
     // ADMIN ROUTES
     // ============================
     Route::middleware('role:admin')->prefix('admin')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+        Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
 
         // Manage Categories and Services
         Route::resource('/categories', ServiceCategoryController::class);

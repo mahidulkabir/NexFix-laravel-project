@@ -12,7 +12,7 @@
           <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
         @else
           <li class="nav-item"><a class="nav-link" href="{{ route('services.index') }}">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('bookings.index') }}">My Bookings</a></li>
+          {{-- <li class="nav-item"><a class="nav-link" href="{{ r  oute('bookings.index') }}">My Bookings</a></li> --}}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{{ Auth::user()->name }}</a>
             <ul class="dropdown-menu dropdown-menu-end">
